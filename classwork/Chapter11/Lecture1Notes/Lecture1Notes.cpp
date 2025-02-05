@@ -1,6 +1,6 @@
 /* Jonah Shulske
  * Chapter 11 Notes - Pointers
- * 2/3/25
+ * 2/3/25 + 2/5/25
  */
 
 #include <iostream>
@@ -98,6 +98,112 @@ using namespace std;
  * cout << pAny;   // Ok, outputs the content of pAny
  * cout << *pAny   // Very bad. There's an address but no data type to get all the bytes.
  * cout << *(static_cast<int*>(pAny));  // Cast pAny to pointer to an int, then dereference
+ * 
+ * New Operator
+ * The new operator makes a request to the OS to get memory from the heap
+ * If memory access is successful, the new operator returns the address of the first byte of the allocated memory
+ * If memory allocation is not successful, an exception is thrown.
+ * int* ptr = nullptr;
+ * ptr = new int;
+ * *ptr = 42;
+ * cout << *ptr << endl;
+ * 
+ * Delete Operator
+ * The delete operator does NOT delete a pointer or an address.
+ * It notifies the OS that the address contained in the pointer that the delete operator is referencing is no longer being used by the program and may be reclaimed
+ * After a pointer is "deleted", the address stored in the pointer is still there, but no longer belongs to the program.
+ * void makePtr (int val)
+ * {
+ *     int* p;
+ *     p = new int;
+ *     *p = value;
+ * }  // memory
+ * 
+ * int main()
+ * {
+ *    int foo = 42;
+ *    makePtr(foo);
+ *    return 0;     // memory leak
+ * }
+ * 
+ * Recode makePtr to remove memory leak
+ * void makePtr(int val)
+ * {
+ *    int* p;
+ *    p = new int;
+ *    *p = val;
+ *    delete p;     // No more memory leak
+ * }
+ * 
+ * Another, and better way to do it
+ * int* makePtr(int val)
+ * {
+ *    int* p = new int;
+ *    *p = val;
+ *    return p;
+ * }
+ * 
+ * int main()
+ * {
+ *    int foo = 42;
+ *    int* bar = makePtr(foo);
+ *    delete bar;
+ *    return 0;
+ * }
+ * 
+ * Dynamic Array - Array whose size can be set at runtime. The size declarator is allowed to be a variable.
+ * A pointer is required to build a dyanmic array
+ * Dynamic array is almost as fast and spacially efficient as a static array
+ * The size of a dynamic array cannot change after it's declared.
+ * 
+ * int numTeams;
+ * string* teamNames;   // Scalar or array - Don't know yet at this part.
+ * cout << "How many teams?"
+ * cin >. numTeams; cin.ignore();
+ * teamNames = new string[numTeams];
+ * for (int index {0}; index < numTeams; ++index)
+ * {
+ *    getline(cin, teamNames[index]);
+ * }
+ * delete[] teamNames;
+ * Notice [] for deleting dynamic array
+ * 
+ * Power Arithmetic - An integer can ge added or subtracted to or from a pointer. This results in a new memory location.
+ * A pointer can be subtracted from another pointer of the same data type.
+ * This results in the number of data type units between the two pointers.
+ * 
+ * int arr[5] {2, 4, 6, 8, 10};     // 20 bytes
+ * int* p = nullptr;
+ * p = arr;              // p stores address of first byte of arr
+ * cout << arr << endl;  // Outputs address of first byte of arr
+ * cout << p << endl;    // same as above
+ * cout << arr[0] <<     // Outputs first element of arr
+ * cout << *p << endl;   // Same as above
+ * for (int index = 0; index < 5; ++index)
+ * {
+ *    cout << arr[index] << endl;
+ *    cout << *(p + index) << endl;
+ * }
+ * Parentheses around (p + index) are needed because * binds more tightly than plus.
+ * *p + 4 => 2 + 4 => 6
+ * *(p + 4) => *(p pointed to element 4) => 10
+ * 
+ * Each element is 4 bytes
+ * 
+ * Pointers can be  and decremented.
+ * ptr++ => ptr = ptr + 1
+ * for (int* ptr = arr; ptr < arr + 5; ptr++)
+ * {
+ *    cout << *ptr << endl;
+ * }
+ * 
+ * Linked List - Ordered, liner data structure
+ * Linked lists are used to built other, more complex data structures (stacks, queues, deques, hash tables, etc.)
+ * The building block of a linked list is the node
+ * A node has at least 2 components. Data and a pointer to the next node (often called 'Next')
+ * Head and tail are pointers to node. They are not nodes themselves.
+ * A linked list node is self-referential
+ *
  */
 
 
