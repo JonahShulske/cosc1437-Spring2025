@@ -14,7 +14,7 @@ using namespace std;  // I use std:: for cout whenever it's something the user w
 
 const string FILE_NAME = "moviecount.txt";
 
-int ReadMovieData(int*& Movies, string fileName);
+int* ReadMovieData(int& Movies, string fileName);
 int ReadMovieData(int** Movies, string fileName);
 double CalculateAverage(int* Movies, int Size);
 double CalculateMedian(int* Movies, int Size);
@@ -30,7 +30,8 @@ int main()
     try
     {
         numStudents = ReadMovieData(&movieCounts, FILE_NAME);
-    } catch (const char* Message)
+    } 
+    catch (const char* Message)
     {
         cout << Message << endl;
         system("ERROR");
@@ -55,10 +56,29 @@ int main()
     return 0;
 }
 
-int ReadMovieData(int *& Movies, string fileName)
+int* ReadMovieData(int& Movies, string fileName)
 {
+    ifstream ogFile(fileName);
+    if (!ogFile)
+        throw "Cannot open file: " + fileName;
 
-    return 0;
+    ogFile >> Movies;
+
+    int* arr = new int[Movies];
+
+    for (int index = 0; index < Movies; ++index)
+    {
+        ogFile >> arr[index];
+    }
+
+    for (int index = 0; index < Movies; ++index)
+    {
+        std::cout << arr[index] << " ";
+    }
+
+    cout << endl;
+
+    return arr;
 }
 
 int ReadMovieData(int ** Movies, string fileName)
