@@ -10,11 +10,11 @@
 #include <fstream>
 #include <iomanip>
 #include <algorithm>
-using namespace std;  // I use std:: for cout whenever it's something the user will actually see/interact with.
+using namespace std;  // I use std::cout whenever it's something the user will actually see/interact with.
 
 const string FILE_NAME = "moviecount.txt";
 
-int* ReadMovieData(int& Movies, string fileName);
+int ReadMovieData(int*& Movies, string fileName);
 int ReadMovieData(int** Movies, string fileName);
 double CalculateAverage(int* Movies, int Size);
 double CalculateMedian(int* Movies, int Size);
@@ -30,7 +30,7 @@ int main()
     try
     {
         numStudents = ReadMovieData(&movieCounts, FILE_NAME);
-    } 
+    }
     catch (const char* Message)
     {
         cout << Message << endl;
@@ -56,53 +56,113 @@ int main()
     return 0;
 }
 
-int* ReadMovieData(int& Movies, string fileName)
+int ReadMovieData(int*& Movies, string fileName)
 {
-    ifstream ogFile(fileName);
-    if (!ogFile)
-        throw "Cannot open file: " + fileName;
+    ifstream inputFile(fileName);
+    if (!inputFile)
+        throw "Error opening file: " + fileName;
 
-    ogFile >> Movies;
+    int numStudents;
+    inputFile >> numStudents;
 
-    int* arr = new int[Movies];
+    Movies = new int[numStudents];
+    for (int index = 0; index < numStudents; ++index)
+        inputFile >> Movies[index];
 
-    for (int index = 0; index < Movies; ++index)
+    inputFile.close();
+
+    return numStudents;
+}
+
+int ReadMovieData(int** Movies, string fileName)
+{
+    ifstream inputFile(fileName);
+    if (!inputFile)
+        throw "Error opening file: " + fileName;
+
+    int numStudents;
+    inputFile >> numStudents;
+
+    *Movies = new int[numStudents];
+    for (int index = 0; index < numStudents; ++index)
+        inputFile >> (*Movies)[index];
+
+    inputFile.close();
+
+    return numStudents;
+}
+
+double CalculateAverage(int* Movies, int Size)
+{
+    if (Size == 0)
+        return 0.0;
+
+    double Sum = 0.0;
+    for (int index = 0; index < Size; ++index)
+        Sum += Movies[index];
+
+    return (Sum / Size);
+}
+
+double CalculateMedian(int* Movies, int Size)
+{
+    if (Size == 0)
+        return 0.0;
+
+    Sort(Movies, Size);
+
+    if (Size % 2 == 1)
+        return Movies[Size / 2];
+    else
     {
-        ogFile >> arr[index];
+        int mid1 = (Size / 2);
+        int mid2 = mid1 - 1;
+        return (Movies[mid1] + Movies[mid2]) / 2.0;
     }
 
-    for (int index = 0; index < Movies; ++index)
+}
+
+int* CalculateMode(int* Movies, int Size, int& numModes)
+{
+    if (Size == 0)
     {
-        std::cout << arr[index] << " ";
+        numModes = 0;
+        return nullptr;
     }
 
-    cout << endl;
+    int maxValue = *max_element(Movies, Movies + Size);
 
-    return arr;
+    int* Frequency = new int[maxValue + 1];
+    for (int index = 0; index < Size; ++index)
+        Frequency[Movies[index]]++;
+
+    int maxFrequency = 0;
+    for (int index = 0; index <= maxValue; ++index)
+        if (Frequency[index] > maxFrequency)
+            maxFrequency = Frequency[index];
+
+    numModes = 0;
+    for (int index = 0; index <= maxValue; ++index)
+        if (Frequency[index] == maxFrequency)
+            numModes++;
+
+    int* modeArray = new int[numModes];
+    int modeIndex = 0;
+    for (int index = 0; index <= maxValue; ++index)
+        if (Frequency[index] == maxFrequency)
+            modeArray[modeIndex++] = index;
+
+    delete[] Frequency;
+
+    return modeArray;
 }
 
-int ReadMovieData(int ** Movies, string fileName)
+void Sort(int*& Movies, int Size)
 {
-    return 0;
+    sort(Movies, Movies + Size);
 }
 
-double CalculateAverage(int * Movies, int Size)
+void Swap(int* A, int* B)
 {
-    return 0.0;
 }
 
-double CalculateMedian(int * Movies, int Size)
-{
-    return 0.0;
-}
-
-int * CalculateMode(int * Movies, int Size, int & numModes)
-{
-    return nullptr;
-}
-
-void Sort(int *& Movies, int Size)
-{}
-
-void Swap(int * A, int * B)
-{}
