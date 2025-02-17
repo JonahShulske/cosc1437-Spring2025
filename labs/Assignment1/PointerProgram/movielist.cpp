@@ -15,7 +15,6 @@ using namespace std;  // I use std::cout whenever it's something the user will a
 const string FILE_NAME = "moviecount.txt";
 
 int ReadMovieData(int*& Movies, string fileName);
-int ReadMovieData(int** Movies, string fileName);
 double CalculateAverage(int* Movies, int Size);
 double CalculateMedian(int* Movies, int Size);
 int* CalculateMode(int* Movies, int Size, int& numModes);
@@ -29,7 +28,7 @@ int main()
 
     try
     {
-        numStudents = ReadMovieData(&movieCounts, FILE_NAME);
+        numStudents = ReadMovieData(*&movieCounts, FILE_NAME);
     }
     catch (const char* Message)
     {
@@ -44,14 +43,22 @@ int main()
     std::cout << "The average number of movies watched by all students is: " << CalculateAverage(movieCounts, numStudents) << endl;
     std::cout << "The median number of movies watched by all students is: " << CalculateMedian(movieCounts, numStudents) << endl;
 
+    Sort(movieCounts, numStudents);
+
     int numModes = 0;
     int* Modes = CalculateMode(movieCounts, numStudents, numModes);
+
     std::cout << "The mode number of movies watched by all students is: ";
-    if (numModes >= 1)
+    if (numModes >= 1 && Modes != nullptr)
+    {
         std::cout << Modes[0];
-    for (int index = 0; index < numModes; index++)
-        std::cout << ", " << Modes[index];
+        for (int index = 1; index < numModes; ++index)
+            std::cout << ", " << Modes[index];
+    }
     cout << "\n" << endl;
+
+    delete[] movieCounts;
+    delete[] Modes;
 
     return 0;
 }
@@ -68,24 +75,6 @@ int ReadMovieData(int*& Movies, string fileName)
     Movies = new int[numStudents];
     for (int index = 0; index < numStudents; ++index)
         inputFile >> Movies[index];
-
-    inputFile.close();
-
-    return numStudents;
-}
-
-int ReadMovieData(int** Movies, string fileName)
-{
-    ifstream inputFile(fileName);
-    if (!inputFile)
-        throw "Error opening file: " + fileName;
-
-    int numStudents;
-    inputFile >> numStudents;
-
-    *Movies = new int[numStudents];
-    for (int index = 0; index < numStudents; ++index)
-        inputFile >> (*Movies)[index];
 
     inputFile.close();
 
@@ -132,7 +121,7 @@ int* CalculateMode(int* Movies, int Size, int& numModes)
 
     int maxValue = *max_element(Movies, Movies + Size);
 
-    int* Frequency = new int[maxValue + 1];
+    int* Frequency = new int[maxValue + 1]();
     for (int index = 0; index < Size; ++index)
         Frequency[Movies[index]]++;
 
@@ -149,20 +138,26 @@ int* CalculateMode(int* Movies, int Size, int& numModes)
     int* modeArray = new int[numModes];
     int modeIndex = 0;
     for (int index = 0; index <= maxValue; ++index)
-        if (Frequency[index] == maxFrequency)
+        if (Frequency[index] == maxFrequency && modeIndex < numModes)
             modeArray[modeIndex++] = index;
 
+  
     delete[] Frequency;
-
     return modeArray;
 }
 
 void Sort(int*& Movies, int Size)
 {
-    sort(Movies, Movies + Size);
+    for (int index = 0; index < (Size - 1); ++index)
+        for (int index2 = 0; index2 < (Size - index - 1); ++index2)
+            if (Movies[index2] > Movies[index2 + 1])
+                Swap(&Movies[index2], &Movies[index2 + 1]);
 }
 
 void Swap(int* A, int* B)
 {
+    int temp = *A;
+    *A = *B;
+    *B = temp;
 }
 
