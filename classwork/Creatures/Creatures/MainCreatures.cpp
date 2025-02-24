@@ -70,7 +70,7 @@ int main()
                 break;
             
             case '4': // Quit
-                std::cout << "Quitter" << endl;
+                std::cout << "Bruh" << endl;
                 break;
 
             default:
@@ -93,23 +93,99 @@ int main()
 
 int GetCreatureNumber(int numCreatures)
 {
-    return 0;
+    cout << endl; 
+    int creatureNum;
+    do
+    {
+        std::cout << "Which creature would you like to view?" << endl;
+        std::cout << "Enter choice between 1-" << numCreatures << ": ";
+        cin >> creatureNum;
+        if (creatureNum < 1 || creatureNum > numCreatures)
+            std::cout << "Invalid entry, try again" << endl;
+
+    } while (creatureNum < 1 || creatureNum > numCreatures);
+
+    cout << endl;
+
+    return creatureNum;
 }
 
 void DisplayCreature(fstream& ogFile, int Num)
 {
+    // Make the file good
+    ogFile.clear(); // Clears anything that could be considered a "Corrupt flag". Clears file errors
+
+    // Move the cursor to the desired position (num - 1)
+    ogFile.seekg((Num - 1) * sizeof(Creature), ios::beg);
+    Creature creature;
+
+    // Read data from the file into Creature struct
+    ogFile.read(reinterpret_cast<char*>(&creature), sizeof(Creature));  // sizeof(creature)
+
+    // Output data
+    std::cout << "Creature Report" << endl;
+    std::cout << "Name: " << creature.Name << endl;
+    std::cout << "Type: " << creature.creatureType << endl;
+    std::cout << "HP: " << creature.HP << endl;
+    std::cout << "Armor Class: " << creature.Armor << endl;
+    std::cout << "Speed: " << creature.Speed << endl;
+    cout << endl;
+
+
 }
 
 void DisplaySorted(fstream& ogFile)
 {
+    // Make the file good and set at the start
+    ogFile.clear();
+    ogFile.seekg(0L, ios::beg);
+
+    // Vector to store creatures
+    vector<Creature> creatures;
+
+    // Read through the file and store in vector
+    Creature creature;
+    ogFile.read(reinterpret_cast<char*>(&creature), sizeof(Creature));
+    while (!ogFile.eof())
+    {
+        creatures.push_back(creature);
+        ogFile.read(reinterpret_cast<char*>(&creature), sizeof(creature));
+    }
+
+    // Sort the vector using <algorithm> sort by name order
+
+    sort(creatures.begin(), creatures.end(), SortByName);
+    cout << endl;
+    for (const auto& creature : creatures)  // Range based for loop
+    {
+        std::cout << creature.Name << "\n" << creature.creatureType << "\n" << creature.HP << "\n" << creature.Armor << "\n" << creature.Speed << "\n" << endl;
+    }
 }
 
 int AddCreature(fstream& ogFile, int numCreatures)
 {
-    return 0;
+    Creature creature;
+    std::cout << "Enter a creature name: ";
+    cin.getline(creature.Name, CREATURE_NAME_SIZE);
+    std::cout << "Enter a creature type: ";
+    cin.getline(creature.creatureType, CREATURE_TYPE_SIZE);
+    std::cout << "Enter hit points: ";
+    cin >> creature.HP;
+    std::cout << "Enter armor level: ";
+    cin >> creature.Armor;
+    std::cout << "Enter speed level: ";
+    cin >> creature.Speed;
+
+    ogFile.clear();
+    ogFile.seekp(0L, ios::end);
+    ogFile.write(reinterpret_cast<char*>(&creature), sizeof(creature));
+
+    return (numCreatures + 1);
 }
 
 bool SortByName(const Creature& lhs, const Creature & rhs)
 {
-    return false;
+    string name1(lhs.Name), name2(rhs.Name);    // Converting C-String to C++ String
+
+    return name1 < name2;
 }
