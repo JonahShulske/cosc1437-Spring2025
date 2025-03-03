@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BookStore_Inline", "BookStore_Inline\BookStore_Inline.vcxproj", "{99754128-B6F3-4743-B156-68C0FFC7B94A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BookStore_Vector", "BookStore_Vector\BookStore_Vector.vcxproj", "{F8E8F1AE-29B9-42CB-B4BF-EB52AA32F394}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{99754128-B6F3-4743-B156-68C0FFC7B94A}.Release|x64.Build.0 = Release|x64
 		{99754128-B6F3-4743-B156-68C0FFC7B94A}.Release|x86.ActiveCfg = Release|Win32
 		{99754128-B6F3-4743-B156-68C0FFC7B94A}.Release|x86.Build.0 = Release|Win32
+		{F8E8F1AE-29B9-42CB-B4BF-EB52AA32F394}.Debug|x64.ActiveCfg = Debug|x64
+		{F8E8F1AE-29B9-42CB-B4BF-EB52AA32F394}.Debug|x64.Build.0 = Debug|x64
+		{F8E8F1AE-29B9-42CB-B4BF-EB52AA32F394}.Debug|x86.ActiveCfg = Debug|Win32
+		{F8E8F1AE-29B9-42CB-B4BF-EB52AA32F394}.Debug|x86.Build.0 = Debug|Win32
+		{F8E8F1AE-29B9-42CB-B4BF-EB52AA32F394}.Release|x64.ActiveCfg = Release|x64
+		{F8E8F1AE-29B9-42CB-B4BF-EB52AA32F394}.Release|x64.Build.0 = Release|x64
+		{F8E8F1AE-29B9-42CB-B4BF-EB52AA32F394}.Release|x86.ActiveCfg = Release|Win32
+		{F8E8F1AE-29B9-42CB-B4BF-EB52AA32F394}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
