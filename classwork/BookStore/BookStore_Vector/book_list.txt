@@ -1,0 +1,16 @@
+To Kill A Mockingbird
+Killing a bird with two stones
+12.99
+1
+C++ for Fun and Games
+You can do it. C++ is fun and exciting. You can make video games.
+49.99
+2
+Harry Potter and the Magical Toilet
+Harry has a problem. Should he flush or should he blush?
+14.99
+2
+Stay DRY
+Never, ever, ever, repeat yourself.
+17.99
+1
