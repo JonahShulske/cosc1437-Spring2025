@@ -48,7 +48,7 @@ void readCarData(vector<Car>& cars, string fileName) {
 	ifstream file(fileName);
 
 	if(!file.is_open()) {
-		throw invalid_argument("File not found");
+		throw invalid_argument("File: " << fileName << ", not found");
 	}
 
 	string dataLine;

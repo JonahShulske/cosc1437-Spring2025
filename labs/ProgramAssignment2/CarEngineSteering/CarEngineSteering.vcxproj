@@ -131,6 +131,12 @@
     <ClInclude Include="engine.h" />
     <ClInclude Include="steering.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="car.cpp" />
+    <ClCompile Include="Car_Engine_Steering_main.cpp" />
+    <ClCompile Include="engine.cpp" />
+    <ClCompile Include="steering.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
