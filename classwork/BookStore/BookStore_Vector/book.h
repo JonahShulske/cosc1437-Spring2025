@@ -14,7 +14,7 @@ class Book
         std::string bookTitle {};
         double price {};
         int quantity {};
-        std::string descripion {};
+        std::string description {};
 
     public:
         Book();
