@@ -78,12 +78,30 @@ bool Book::operator!=(const Book& rhs)
 
 bool Book::operator<(const Book& rhs)
 {
-    return false;
+    if (this->price < rhs.price)
+        return true;
+
+    else if (this->price == rhs.price)
+    {
+        if (this->bookTitle < rhs.bookTitle)
+            return true;
+    }
+    else
+        return false;
 }
 
 bool Book::operator>(const Book& rhs)
 {
-    return false;
+    if (this->price > rhs.price)
+        return true;
+
+    else if (this->price == rhs.price)
+    {
+        if (this->bookTitle > rhs.bookTitle)
+            return true;
+    }
+    else
+        return false;
 }
 
 std::ostream& operator<<(std::ostream& outprint, const Book& book)
