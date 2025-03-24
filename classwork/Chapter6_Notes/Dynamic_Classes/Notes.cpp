@@ -50,3 +50,41 @@ using namespace std;
  *
  * Example: The IncreaseCapacity() function doubles the capacity, creates a new array, copies data, and deletes the old array.
  */
+
+// 4. EFFICIENT MEMORY MANAGEMENT: DESTRUCTORS
+/* Role of a Destructor:
+    * Destructors are crucial for avoiding memory leaks by ensuring all dynamically allocated memory is (7) when an object is destroyed.
+    * When an object of a class with dynamic memory goes out of scope, the (8) is automatically called.
+ *
+ * Example: The ~ActivityTracker() destructor is responsible for releasing the memory allocated for the activities array.
+ */
+
+// 5. COMMON MISTAKES AND SOLUTIONS IN DYNAMIC MEMORY MANAGEMENT
+/* Memory Leaks:
+    * Memory leaks occur when dynamically allocated memory is not (9), causing the program to consume more memory over time.
+    * Solution: Always ensure that dynamically allocated memory is deallocated in the destructor.
+ *
+ * Copy Constructor and Assignment Operator:
+    * The default copy constructor and assignment operator perform (10) copies, leading to multiple objects pointing to the same memory.
+    * Deep Copy: For classes with dynamically allocated memory, you need to define a copy constructor and assignment operator to perform deep copies.
+ *
+ * Example: The ActivityTracker class should have a copy constructor that duplicates the dynamic array when copying an object, ensuring that the new object owns its own separate memory.
+ */
+
+// 6. RULE OF THREE
+/* Rule of Three: If a class requires a destructor, it likely also needs a copy constructor and an assignment operator.
+    * Dynamically allocated data needs to be carefully managed when objects are copied or assigned to ensure that memory is properly handled.
+ *
+ * Example: If an ActivityTracker object is copied without a copy constructor, both the original and copy would point to the same activities array. 
+    * Deleting one would invalidate the array for the other, leading to runtime errors.
+ */
+
+// PRACTICAL EXAMPLE: ACTIVITYTRACKER CLASS IN USE
+/* Adding Activies: When adding activities to the tracker, if space is available, the new data is simply added. Otherwise, the array is expanded first.
+    * The member function AddActivity() checks if there's space and calls IncreaseCapacity() if needed.
+ *
+ * Calculating Steps Per Hour: 
+    * The CalcStepsPerHour() function iterates through the ActivityTracker array and calculates the number of steps walked per hour based on total steps and total seconds. 
+ */
+
+// 8. COPY CONSTRUCTORS AND ASSIGNMENT OPERATORS
