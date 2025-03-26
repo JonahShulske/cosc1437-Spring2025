@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f8e8f1ae-29b9-42cb-b4bf-eb52aa32f394}</ProjectGuid>
-    <RootNamespace>BookStoreVector</RootNamespace>
+    <ProjectGuid>{9ca5824e-21f2-43bd-ac9d-502baba5d3ed}</ProjectGuid>
+    <RootNamespace>BookStoreLinkedList</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,12 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="book.cpp" />
-    <ClCompile Include="bookbag.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="book.h" />
     <ClInclude Include="bookbag.h" />
+    <ClInclude Include="linkedlist.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="book.cpp" />
+    <ClCompile Include="bookbag.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
