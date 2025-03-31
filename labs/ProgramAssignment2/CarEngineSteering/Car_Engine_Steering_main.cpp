@@ -4,11 +4,11 @@
 #include <vector>
 #include <sstream>
 #include <stdexcept>
+using namespace std;
 
 #include "car.h"
 #include "engine.h"
 #include "steering.h"
-using namespace std;
 
 // CarData struct to hold the car data
 struct CarData {
@@ -48,7 +48,7 @@ void readCarData(vector<Car>& cars, string fileName) {
 	ifstream file(fileName);
 
 	if(!file.is_open()) {
-		throw invalid_argument("File: " << fileName << ", not found");
+		throw invalid_argument("File not found");
 	}
 
 	string dataLine;
@@ -107,6 +107,6 @@ CarData parseCarData(string line) {
 /// <param name="cars"></param>
 void printCarData(const vector<Car>& cars) {
 	for (const Car& c : cars) {
-		c.print();
+		c.Print();
 	}
 }
