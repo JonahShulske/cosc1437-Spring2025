@@ -3,35 +3,34 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
-#include <sstream>
-#include <stdexcept>
+#include "steering.h"
+#include "engine.h"
 
 class Car
 {
-private:
-    std::string id {};
-    std::string make {};
-    std::string model {};
-    std::string steeringType {};
-    int horsePower {};
-    int cubicCapacity {};
-    int wheelDiameter {};
+    private:
+        std::string id {};
+        std::string make {};
+        std::string model {};
+        Steering steering;
+        Engine engine;
 
     public:
-        Car(std::string id, std::string make, std::string model, std::string steeringtype, int horsePower, int cubicCapacity, double wheelDiameter);
+        Car(std::string id, std::string make, std::string model, const Steering& steering, const Engine& engine);
 
         // Getters
-        std::string GetID(std::string id) const;
-        std::string GetMake(std::string make) const;
-        std::string GetModel(std::string model) const;
-        std::string GetSteeringType(std::string steeringType) const;
-        // Setters
+        std::string GetID() const;
+        std::string GetMake() const;
+        std::string GetModel() const;
+        Steering GetSteering() const;
+        Engine GetEngine() const;
 
+        // Setters
+        void SetSteering(const Steering& steering);
+        void SetEngine(const Engine& engine);
 
         // Print Functions
         void Print() const;
+
 };
-
-
 #endif // _CAR_H_

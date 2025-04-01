@@ -1,29 +1,25 @@
 #ifndef _STEERING_H_
 #define _STEERING_H_
 #include "car.h"
+#include "steering.h"
 
 class Steering
 {
     private:
-        std::string steeringType;
-        double wheelDiameter;
+        std::string steeringType {};
+        double wheelDiameter {};
 
     public:
-        // Constructor
-        Steering(std::string steeringType, double wheelDiameter) : steeringType(steeringType), wheelDiameter(wheelDiameter) {}
-
         // Setters
-        void SetSteeringType(std::string steeringType) { this->steeringType = steeringType; }
-        void SetWheelDiameter(double wheelDiameter) { this->wheelDiameter = wheelDiameter; }
+        void SetSteeringType(std::string steeringType);
+        void SetWheelDiameter(double wheelDiameter);
 
         // Getters
-        std::string GetSteeringType() const { return steeringType; }
-        double GetWheelDiameter() const { return wheelDiameter; }
+        std::string GetSteeringType() const;
+        double GetWheelDiameter() const;
 
         // Print function
-        void Print() const {
-            std::cout << "Steering Type: " << steeringType << ", Wheel Diameter: " << wheelDiameter << " inches" << std::endl;
-        };
+        void Print() const;
 
 };
 
