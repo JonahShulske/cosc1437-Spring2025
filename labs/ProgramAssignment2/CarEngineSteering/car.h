@@ -16,7 +16,7 @@ class Car
         Engine engine;
 
     public:
-        Car(std::string id, std::string make, std::string model, const Steering& steering, const Engine& engine);
+        Car(std::string id, std::string make, std::string model, const Engine& engine, const Steering& steering);
 
         // Getters
         std::string GetID() const;
@@ -25,7 +25,7 @@ class Car
         Steering GetSteering() const;
         Engine GetEngine() const;
 
-        // Setters
+        //// Setters
         void SetSteering(const Steering& steering);
         void SetEngine(const Engine& engine);
 

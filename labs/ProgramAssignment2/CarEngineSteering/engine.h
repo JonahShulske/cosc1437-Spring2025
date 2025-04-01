@@ -1,6 +1,5 @@
 #ifndef _ENGINE_H_
 #define _ENGINE_H_
-#include "car.h"
 
 class Engine
 {
@@ -9,13 +8,15 @@ class Engine
         int cubicCapacity {};
 
     public:
+        Engine(int horesepower, int cubicCapacity);
+
         // Setters
-        void SetHorsePower(int horsePower) { this->horsePower = horsePower; }
-        void SetCubicCapacity(int cubicCapacity) { this->cubicCapacity = cubicCapacity; }
+        void SetHorsePower(int horsePower);
+        void SetCubicCapacity(int cubicCapacity);
 
         // Getters
-        int GetHorsePower() const { return horsePower; }
-        int GetCubicCapacity() const { return cubicCapacity; }
+        int GetHorsePower() const;
+        int GetCubicCapacity() const;
         // Print function
 
         void Print() const {

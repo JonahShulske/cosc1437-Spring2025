@@ -11,7 +11,8 @@ using namespace std;
 #include "steering.h"
 
 // CarData struct to hold the car data
-struct CarData {
+struct CarData 
+{
 	string id;
 	string make;
 	string model;
@@ -58,11 +59,11 @@ void readCarData(vector<Car>& cars, string fileName) {
 		CarData c = parseCarData(dataLine);
 		// Create an engine object
 		Engine e(c.horsePower, c.cubicCapacity);
-		// Create a steering object
+		//// Create a steering object
 		Steering s(c.steeringType, c.wheelDiameter);
 		// Create a car object
-		Car car(c.id, c.make, c.model, e, s);
-		cars.push_back(car);
+		Car Car(c.id, c.make, c.model, e, s);
+		cars.push_back(Car);
 	}
 
 	file.close();

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Car::Car(string id, string make, string model, const Steering& steering, const Engine& engine) : id(id), make(make), model(model), steering(steering), engine(engine) {}
+Car::Car(string id, string make, string model, const Engine& engine, const Steering& steering) : id(id), make(make), model(model), engine(engine), steering(steering) {}
 
 // Getters
 
@@ -28,12 +28,12 @@ std::string Car::GetModel() const
 
 Steering Car::GetSteering() const
 {
-    return Steering();
+    return steering;
 }
 
 Engine Car::GetEngine() const
 {
-    return Engine();
+    return engine;
 }
 
 void Car::SetSteering(const Steering &steering)
@@ -47,4 +47,12 @@ void Car::SetEngine(const Engine & engine)
 }
 
 void Car::Print() const
-{}
+{
+    std::cout << "Car: " << id << " " << make << " " << model << endl;
+    std::cout << "\t Horsepower: " << engine.GetHorsePower() << endl;
+    std::cout << "\t Cubic Capacity: " << engine.GetCubicCapacity() << endl;
+    std::cout << "\t Steering Type: " << steering.GetSteeringType() << endl;
+    std::cout << "\t Wheel Diameter: " << steering.GetWheelDiameter() << endl;
+
+    cout << endl;
+}

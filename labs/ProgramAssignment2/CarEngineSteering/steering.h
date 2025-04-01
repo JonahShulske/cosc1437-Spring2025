@@ -1,7 +1,6 @@
 #ifndef _STEERING_H_
 #define _STEERING_H_
-#include "car.h"
-#include "steering.h"
+#include <string>
 
 class Steering
 {
@@ -10,6 +9,8 @@ class Steering
         double wheelDiameter {};
 
     public:
+        Steering(std::string steeringType, double wheelDiameter);
+
         // Setters
         void SetSteeringType(std::string steeringType);
         void SetWheelDiameter(double wheelDiameter);
