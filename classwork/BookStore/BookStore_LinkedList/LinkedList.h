@@ -28,6 +28,48 @@ class LinkedList
         LinkedList operator=(const LinkedList& rhs);    // Assignment
         virtual ~LinkedList();      // Destructor
 
+        // Insertion methods
+        void AddToFront(dataType data);
+        void AddToRear(dataType data);
+        void AddAt(dataType data, int pos);
+
+        // Getters
+        dataType GetFromFront() const;
+        dataType GetAtRear() const;
+        dataType GetAt(int pos) const;
+
+        // Setters
+        void SetFront(dataType data);
+        void SetRear(dataType data);
+        void SetAt(dataType data, int pos);
+
+        // Deletion methods
+        dataType RemoveFromFront();
+        dataType RemoveFromRear();
+        dataType RemoveAt(int pos);
+
+        // Utility
+        int GetSize() const;
+        bool IsEmpty() const;
+
+    private:
+        class Node
+        {
+            private:
+                dataType data;
+                Node* next;
+                
+            public:
+                Node(dataType data);
+                Node(dataType data, Node* next);
+
+                // Setters / Getters
+                void SetNext(Node* next);   // Usually don't wanna return a pointer, but doing it here cause the only object that can access it is the LinkedList class
+                Node* GetNext() const;
+                void SetData(dataType data);
+                dataType GetData() const;
+        };
+
 
 };
 

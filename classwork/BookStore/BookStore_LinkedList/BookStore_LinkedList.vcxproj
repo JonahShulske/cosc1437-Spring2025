@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClCompile Include="book.cpp" />
     <ClCompile Include="bookbag.cpp" />
+    <ClCompile Include="linkedlist.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
