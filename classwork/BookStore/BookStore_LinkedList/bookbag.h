@@ -3,16 +3,16 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
 #include <climits>
 #include "book.h"
+#include "linkedlist.h"
 
 class BookBag
 {
 private:
     std::string customerName;
     std::string currentDate;    // Don't actually use a string for real programming. This is being done out of laziness
-    std::vector<Book> books;
+    LinkedList books;
 
 public:
     BookBag(std::string customerName, std::string currentDate);

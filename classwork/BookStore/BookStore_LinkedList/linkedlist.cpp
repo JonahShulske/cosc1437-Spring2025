@@ -103,7 +103,7 @@ void LinkedList::AddAt(dataType data, int pos)
         // Add somewhere in middle. Get a pointer to node before
         Node* prev = GetNodeAtPosition(pos - 1);
         if (prev == nullptr || prev->GetNext() == nullptr)
-            throw std::runtime_error("Error: Was zum Teufel ist los mit dir?");
+            throw std::runtime_error("Fehler: Was zum Teufel ist los mit dir?");
 
         // Get a pointer to the node inserting at
         Node* curr = prev->GetNext();
@@ -170,58 +170,123 @@ void LinkedList::SetAt(dataType data, int pos)
 
 dataType LinkedList::RemoveFromFront()
 {
-    return dataType();
+    if (IsEmpty())
+        throw std::runtime_error("Error: Cannot Remove Data From Empty List");
+
+    dataType data = head->GetData();    // Get the Data From the Node
+
+    Node* temp = head;      // Declare Pointer to Node and Point Node to Head
+
+    head = head->GetNext();     // Move Head to Next Node
+
+    // Break Link from First Node and Return Allocated Memory to OS
+    temp->SetNext(nullptr);
+    delete temp;
+
+    if (head == nullptr)    // Will only happen with a one node list
+        tail = head;
+    size--;
+
+    return data;
 }
 
 dataType LinkedList::RemoveFromRear()
 {
-    return dataType();
+    if (IsEmpty())
+        throw std::runtime_error("Error: Cannot Remove Data From Empty List");
+
+    dataType data = tail->GetData();
+    if (head == tail)  // Only have one node
+    {
+        delete head;    // Releases alllocated memory
+        head = tail = nullptr;
+    }
+    else    // Find the node before the tail in order to remove tail
+    {
+        Node* prev = GetNodeAtPosition(size - 2);
+        if (prev == nullptr)
+            throw std::runtime_error("Error: Previous Node Cannot be Null");
+
+        prev->SetNext(nullptr);
+        delete tail;
+        tail = prev;
+    }
+    size--;
+
+    return data;
 }
 
 dataType LinkedList::RemoveAt(int pos)
 {
-    return dataType();
+    if (IsEmpty())
+        throw std::runtime_error("Error: Cannot Remove Data From Empty List");
+
+    if (pos < 0 || pos > size)
+        throw std::invalid_argument("Error: Position Out of Range");
+
+    if (pos == 0)       // User somehow made it to the wrong function
+        return RemoveFromFront();
+    else if (pos == size - 1)
+        return RemoveFromRear();
+
+
+    Node* prev = GetNodeAtPosition(pos - 1);
+    if (prev == nullptr)
+        throw std::runtime_error("Error: Previous Node Cannot be Null");
+
+    Node* curr = prev->GetNext();
+    dataType data = curr->GetData();
+
+    prev->SetNext(curr->GetNext());
+    curr->SetNext(nullptr);
+
+    delete curr;
+    return data;
 }
 
 int LinkedList::GetSize() const
 {
-    return 0;
+    return size;
 }
 
 bool LinkedList::IsEmpty() const
 {
-    return false;
+    return head == nullptr;
 }
 
 // Private Method
 LinkedList::Node* LinkedList::GetNodeAtPosition(int pos) const
 {
-    return nullptr;
+    // pos: 0 is head, size - 1 is tail
+    Node* curr = head;
+
+    for (int index = 0; curr != nullptr && index < pos; ++index)
+        curr = curr->GetNext();
+
+    return curr;
 }
 
 // Methods for class Node
-LinkedList::Node::Node(dataType data)
-{
-}
+LinkedList::Node::Node(dataType data) : Node(data, nullptr) {}
 
-LinkedList::Node::Node(dataType data, Node* next)
-{
-}
+LinkedList::Node::Node(dataType data, Node* next) : data(data), next(next) {}
 
 void LinkedList::Node::SetNext(Node* next)
 {
+    this->next = next;
 }
 
 LinkedList::Node* LinkedList::Node::GetNext() const
 {
-    return nullptr;
+    return next;
 }
 
 void LinkedList::Node::SetData(dataType data)
 {
+    this->data = data;
 }
 
 dataType LinkedList::Node::GetData() const
 {
-    return dataType();
+    return data;
 }

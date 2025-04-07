@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <climits>
+#include <stdexcept>
 #include "bookbag.h"
 
 BookBag::BookBag(std::string customerName, std::string currentDate) : customerName(customerName), currentDate(currentDate) {}
@@ -18,24 +19,29 @@ std::string BookBag::GetCurrentDate() const
 
 void BookBag::AddBook(Book book)
 {
-    for (Book& aBook : books)
-        if (aBook == book)
+    for (int index = 0; index < books.GetSize(); ++index)
+    {
+        if (books.GetAt(index) == book)
         {
-            aBook.SetQuantity(aBook.GetQuantity() + book.GetQuantity());
+            Book temp = books.GetAt(index);
+            temp.SetQuantity(books.GetAt(index).GetQuantity() + book.GetQuantity());
+            books.SetAt(temp, index);
             return;
         }
-
-    books.push_back(book);
+    }
+    books.AddToRear(book);
 }
 
 void BookBag::RemoveBook(std::string title, std::string description)
 {
-    for (int index = 0; index < books.size(); ++index)
-        if (books.at(index).GetTitle() == title && books.at(index).GetDescription() == description)
+    for (int index = 0; index < books.GetSize(); ++index)
+    {
+        if (books.GetAt(index).GetTitle() == title && books.GetAt(index).GetDescription() == description)
         {
-            books.erase(books.begin() + index);
+            books.RemoveAt(index);
             break;
         }
+    }
 }
 
 void BookBag::RemoveBook(Book book)
@@ -50,26 +56,36 @@ void BookBag::ModifyBook(const Book & book)
     */ 
 
     Book defaultBook; // Create an instance a default book
-    for (Book& aBook : books)
-        if (aBook == book)   // Check which attributes to update (modify)
+    for (int index = 0; index < books.GetSize(); ++index)
+    {
+        Book aBook = books.GetAt(index);
+        if (aBook == book)      // check attributes to update
         {
             if (book.GetPrice() != defaultBook.GetPrice())
                 aBook.SetPrice(book.GetPrice());
 
             if (book.GetQuantity() != defaultBook.GetQuantity())
+            {
                 if (book.GetQuantity() == 0)
                     RemoveBook(aBook);
                 else
                     aBook.SetQuantity(book.GetQuantity());
+            }
+
+            if (book.GetQuantity() > 0)
+                books.SetAt(aBook, index);
+
+            break;
         }
+    }
 }
 
 int BookBag::GetNumBooksInBag() const
 {
     // This is the total number of books including duplicates
     int total = 0;
-    for (const Book& book : books)
-        total += book.GetQuantity();
+    for (int index = 0; index < books.GetSize(); ++index)
+        total += books.GetAt(index).GetQuantity();
 
     return total;
 }
@@ -78,15 +94,15 @@ double BookBag::GetCostOfBag() const
 {
     // Total cost of all the books, including duplicates
     double total = 0.0;
-    for (const Book& book : books)
-        total += book.GetQuantity() * book.GetPrice();
+    for (int index = 0; index < books.GetSize(); ++index)
+        total += books.GetAt(index).GetQuantity() * books.GetAt(index).GetPrice();
 
     return total;
 }
 
 int BookBag::GetUniqueBookCount() const
 {
-    return books.size();
+    return books.GetSize();
 }
 
 void BookBag::PrintTotal() const
@@ -104,8 +120,8 @@ BookBag BookBag::operator+(BookBag rhs)
     BookBag tempBag(this->customerName, this->currentDate);
     tempBag.books = this->books;
 
-    for (const Book& book : rhs.books)
-        tempBag.AddBook(book);
+    for (int index = 0; index < rhs.books.GetSize(); ++index)
+        tempBag.AddBook(rhs.books.GetAt(index));
 
     return tempBag;
 }
@@ -130,17 +146,16 @@ BookBag BookBag::operator-(Book rhs)
 
 Book & BookBag::operator[](int index)
 {
-    if (index < 0 || index >= books.size())
+    if (index < 0 || index >= books.GetSize())
         throw std::runtime_error("Index out of range");
 
-    return books[index];            // Gets book at array of index   
-
-    // books.at(index) is a balance checker and throws exception if out of range
+    Book temp = books.GetAt(index);
+    return temp;
 }
 
 std::ostream & operator<<(std::ostream & outprint, const BookBag & bag)
 {
-    if (bag.books.empty())
+    if (bag.books.IsEmpty())
     {
         outprint << "BOOK BAG IS EMPTY";
         return outprint;
@@ -149,8 +164,8 @@ std::ostream & operator<<(std::ostream & outprint, const BookBag & bag)
     outprint << bag.customerName << "'s Book Bag -" << bag.currentDate << std::endl;
     outprint << "Number of books: " << bag.GetNumBooksInBag() << "\n" << std::endl;
     
-    for (const Book& book : bag.books)
-        outprint << book << std::endl;
+    for (int index = 0; index < bag.books.GetSize(); ++index)
+        outprint << bag.books.GetAt(index) << std::endl;
 
     outprint << "\n" << "Total: $" << bag.GetCostOfBag();
 
