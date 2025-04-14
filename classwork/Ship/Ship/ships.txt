@@ -1,0 +1,10 @@
+L,RMS Queen Mary 2,2004,2300
+L,Disney Magic,1998,2400
+L,Legend of the Seas,1995,2074
+L,Island Escape,2002,1741
+L,Sea Princess,1998,2370
+C,MSC Oscar,2015,197362
+C,MSC Melatilde,2010,156301
+C,MSC Kalina,2009,176541
+C,Magleby Maersk,2013,164875
+C,CMA CGM Kerguelen,2015,185000
