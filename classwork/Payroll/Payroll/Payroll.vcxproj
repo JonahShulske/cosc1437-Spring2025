@@ -128,7 +128,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="employee.cpp" />
+    <ClCompile Include="hourlyemployee.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="salaryemployee.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="employee.h" />
