@@ -85,9 +85,38 @@ void LoadEmployeeTime(vector<EmployeeTime>& empTime, string fileName)
 
 void CreatePayrollReport(const vector<Employee*>& employees, const vector<EmployeeTime>& empTime, string fileName)
 {
+    ofstream file(fileName);
+    if (!file)
+        throw runtime_error("Error: Could not open file");
+
+    // Output report title and heading
+    file << "Payroll Report:\n" << endl;
+    file << fixed << showpoint << setprecision(2);
+    file << setw(EMPID_LENGTH + 1) << left << "Emp ID: " << setw(FIRSTNAME_LENGTH + LASTNAME_LENGTH + 2)
+         << left << "Employee Name: " << setw(8) << right << "Hours: " << setw(6) << right << "Pay: " << endl;
+
+    // Report Content
+    for (EmployeeTime et : empTime)     // Range based for loop. C++ version of for else loop
+    {
+        auto it = FindEmployee(employees, string(et.id));       // auto allows me to not have to write vector<Employee*>::const_iterator
+        if (it == employees.end())  
+            file << "*****" << string (et.id) << " NOT FOUND *****" << endl;     // file << (*it)->GetEmpID(); will blow up the computer cause there's nothing there
+
+        double pay = (*it)->CalculatePay(et.hours);
+        string name = (*it)->GetLastName() + ", " + (*it)->GetFirstName();
+        file << setw(EMPID_LENGTH + 1) << left << et.id << setw(FIRSTNAME_LENGTH + LASTNAME_LENGTH + 2)
+            << left << name << setw(6) << right << et.hours << " " << setw(8) << right << pay << endl;
+    }
+    file.close();
+
 }
 
-vector<Employee*>::const_iterator FindEmployee(const vector<Employee*>& employee, string id)
+vector<Employee*>::const_iterator FindEmployee(const vector<Employee*>& employees, string id)
 {
-    return vector<Employee*>::const_iterator();
+    vector<Employee*>::const_iterator it;       // it is common name for iterator. It's a fancy pointer
+    for (it = employees.begin(); it != employees.end(); ++it)
+        if ((*it)->GetEmpID() == id)    // (*(*it)).GetEmpID(); would also work. Double dereferencing
+            return it;
+
+    return it;      // it is vector.end();
 }
