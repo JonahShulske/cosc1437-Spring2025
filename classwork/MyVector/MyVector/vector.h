@@ -39,7 +39,7 @@ namespace cosc1437
             Vector<T>& operator+(const T& rhs);
             bool operator==(const Vector<T>& rhs);
             bool operator!=(const Vector<T>& rhs);
-            friend std::ostream& operator<<(std::ostream& outprint, const Vector<T> rhs);       // I use "outprint" instead of "out". Make sure to change this if you follow the instructor's code
+            //friend std::ostream& operator<<(std::ostream& outprint, const Vector<T> rhs);       // I use "outprint" instead of "out". Make sure to change this if you follow the instructor's code
 
             // Getters
             int GetSize() const;
@@ -64,6 +64,26 @@ namespace cosc1437
     template<class T>
     inline void Vector<T>::CheckSize()
     {
+        // Check if array is large enough to add another element
+        if (size < capacity)    // Good
+            return;
+        
+        if (size >= capacity)   // Resize capacity
+            capacity *= 2;
+
+        // Create new array of type T with capacity
+        T* temp = new T[capacity];
+
+        // Copy elements in pElem to temp
+        for (size_type index {0}; index < size; ++index)        // Make sure to change "index" to "i" if you are following the instructor's code
+            temp[index] = pElems[index];
+
+        // Delete pElems so there's no memory leaks
+        if (pElems)
+            delete[] pElems;
+
+        // Assign value of temp to pElems
+        pElems = temp;
     }
 
     // Constructor
@@ -80,7 +100,7 @@ namespace cosc1437
             capacity = 10;
 
         this->capacity = capacity;
-        pElemes = new T[capacity];
+        pElems = new T[capacity];
     }
 
     template<class T>
@@ -95,8 +115,8 @@ namespace cosc1437
     inline Vector<T>::Vector(const Vector<T>& rhs) : Vector<T>(rhs.capacity)
     {
         this->size = rhs.size;
-        for (size_type index{0}; index < size; ++index)         // Make sure to change "index" to "i" if you are following the instructor's code
-            pElems[index] = rhs.pElem[index]
+        for (size_type index {0}; index < size; ++index)         // Make sure to change "index" to "i" if you are following the instructor's code
+            pElems[index] = rhs.pElem[index];
     }
 
     // Destructor
@@ -165,7 +185,7 @@ namespace cosc1437
     template<class T>
     inline bool Vector<T>::operator!=(const Vector<T>& rhs)     // The exact opposite of the other operator
     {
-        return (!opeator==(rhs));
+        return (!operator==(rhs));
     }
 
     // Getters
@@ -236,10 +256,15 @@ namespace cosc1437
         size = 0;
     }
 
-    std::ostream& cosc1437::operator<<(std::ostream & outprint, const Vector<T> rhs)    // I use "outprint" instead of "out". Make sure to change this if you follow the instructor's code
+    /*template<class T>
+    std::ostream& operator<<(std::ostream & outprint, const Vector<T> rhs)    // I use "outprint" instead of "out". Make sure to change this if you follow the instructor's code
     {
-        // TODO: insert return statement here
-    }
+        outprint << "[ ";
+        for (Vector<T>::size_type index {0}; index < GetSize(); ++index)       // Make sure to change "index" to "i" if you are following the instructor's code
+            outprint << pElems[index] << " ";
+        outprint << "]";
+        return outprint;
+    } */
 
 }
 
